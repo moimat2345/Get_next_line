@@ -1,52 +1,116 @@
-# get_next_line
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/covers/cover-get_next_line.png" alt="get_next_line" />
+</div>
 
-> Lire une ligne depuis un descripteur de fichier est bien trop fastidieux.
+# get_next_line - Lire Ligne par Ligne
 
-[![42 Project](https://img.shields.io/badge/42-Project-00babc?style=flat-square&logo=42)](https://42.fr)
-[![Language](https://img.shields.io/badge/Language-C-blue?style=flat-square&logo=c)](https://fr.wikipedia.org/wiki/C_(langage))
-[![Norminette](https://img.shields.io/badge/Norminette-passing-success?style=flat-square)](https://github.com/42School/norminette)
+Le projet `get_next_line` consiste à créer une fonction qui lit et retourne une ligne depuis un descripteur de fichier, une ligne à la fois. Ce projet introduit un concept clé en programmation C : les **variables statiques**.
 
-**Français** | [English](README.md)
+## Statut
+<div align="center">
 
-## Description
+![42 Bangkok](https://img.shields.io/badge/42-Bangkok-000000?style=for-the-badge&logo=42&logoColor=white)
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![Norminette](https://img.shields.io/badge/Norminette-passing-success?style=for-the-badge)
 
-**get_next_line** est une fonction C qui lit et retourne une ligne depuis un descripteur de fichier, une ligne à la fois. Ce projet fait partie du cursus de l'école 42 et introduit un concept important en programmation C : les **variables statiques**.
+<br>
 
-La fonction fonctionne avec n'importe quel descripteur de fichier (fichiers, stdin, sockets) et peut gérer des tailles de buffer variables, ce qui en fait un outil polyvalent pour les opérations d'entrée/sortie sur fichiers.
+### 🌍 Language / Langue
 
-## Table des matières
+[![English](https://img.shields.io/badge/🇬🇧_Read_in_English-red?style=for-the-badge&logoColor=white)](README.md)
 
-- [Fonctionnalités](#fonctionnalités)
-- [Algorithme & Approche technique](#algorithme--approche-technique)
-- [Installation & Compilation](#installation--compilation)
-- [Utilisation](#utilisation)
-- [Structure du projet](#structure-du-projet)
-- [Fonctionnalités bonus](#fonctionnalités-bonus)
-- [Tests](#tests)
-- [Ressources](#ressources)
+</div>
 
-## Fonctionnalités
+---
 
-- Lire des fichiers texte ligne par ligne depuis n'importe quel descripteur de fichier
-- Gérer des fichiers de n'importe quelle taille avec un buffer configurable
-- Efficace en mémoire : ne lit que ce qui est nécessaire
-- Fonctionne avec stdin, les fichiers et les sockets
-- **Bonus** : Support de plusieurs descripteurs de fichiers simultanément
-- Pas de fuites mémoire, entièrement conforme à la norminette
+## Vue d'ensemble
 
-## Algorithme & Approche technique
+L'objectif est de créer une fonction `get_next_line()` qui lit une ligne depuis un descripteur de fichier à chaque appel. Cet exercice améliore la compréhension des variables statiques, de la gestion des descripteurs de fichiers et de l'allocation dynamique de mémoire en C.
 
-### Algorithme principal
+## Ressources utiles
 
-La fonction utilise un **buffer statique** pour persister les données entre les appels. C'est le concept clé qui rend possible la lecture ligne par ligne :
+- [man read(2)](https://man7.org/linux/man-pages/man2/read.2.html) - Documentation de l'appel système read
+- [Variables statiques en C](https://www.geeksforgeeks.org/static-variables-in-c/) - Comprendre le stockage statique
+- [GNL Tester - Tripouille](https://github.com/Tripouille/gnlTester)
+- [Francinette Tester](https://github.com/xicodomingues/francinette)
 
-1. **Phase de lecture** : Lire `BUFFER_SIZE` octets depuis le descripteur de fichier
-2. **Accumulation** : Stocker les données dans un buffer statique qui persiste entre les appels
-3. **Recherche** : Chercher un caractère de nouvelle ligne (`\n`) dans le buffer
-4. **Extraction** : Quand un retour à la ligne est trouvé, extraire et retourner la ligne complète
-5. **Mise à jour** : Garder les données restantes dans le buffer pour le prochain appel
+---
 
-### Pourquoi des variables statiques ?
+## 📋 Partie Obligatoire
+
+<table>
+  <tr>
+    <th>Nom de la fonction</th>
+    <td>get_next_line</td>
+  </tr>
+  <tr>
+    <th>Fichiers à rendre</th>
+    <td>get_next_line.c, get_next_line_utils.c, get_next_line.h</td>
+  </tr>
+  <tr>
+    <th>Makefile</th>
+    <td>Non</td>
+  </tr>
+  <tr>
+    <th>Fonctions externes</th>
+    <td>read, malloc, free</td>
+  </tr>
+  <tr>
+    <th>Libft autorisée</th>
+    <td>Non</td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td>Écrire une fonction qui retourne une ligne lue depuis un descripteur de fichier.</td>
+  </tr>
+</table>
+
+### Règles importantes
+- La fonction doit compiler avec le flag `-D BUFFER_SIZE=n`.
+- Les variables globales sont interdites.
+- Tous les fichiers .c doivent compiler avec les flags `-Wall -Wextra -Werror`.
+- La ligne retournée doit inclure le `\n` final (sauf en fin de fichier sans `\n`).
+
+---
+
+## 📂 Structure du Projet
+
+```
+get_next_line/
+├── 📄 get_next_line.h              # Header (prototypes + defines)
+├── 📄 get_next_line.c              # Fonction principale + logique de lecture
+├── 📄 get_next_line_utils.c        # Fonctions utilitaires (strlen, strjoin, etc.)
+│
+├── 📄 get_next_line_bonus.h        # Header bonus (support multi-fd)
+├── 📄 get_next_line_bonus.c        # Implémentation bonus
+└── 📄 get_next_line_utils_bonus.c  # Utilitaires bonus
+```
+
+---
+
+## 🎯 Fonctions Principales
+
+<details open>
+<summary><b>Cliquez pour voir les fonctions</b></summary>
+
+| Fonction | Rôle | Description |
+|:------:|:-----|:------------|
+| **get_next_line(fd)** | Fonction principale | Coordonne la lecture et retourne une ligne |
+| **read_file(fd, buffer)** | Phase de lecture | Lit depuis le fd jusqu'à trouver un `\n` ou EOF |
+| **find_newline(buffer)** | Phase de recherche | Cherche `\n`, retourne la position ou -1 |
+| **extract_line(buffer)** | Phase d'extraction | Crée et retourne la ligne (incluant `\n`) |
+| **update_buffer(buffer)** | Phase de mise à jour | Supprime la ligne retournée, garde le reste |
+
+</details>
+
+---
+
+## 🔄 Algorithme & Flux de Données
+
+<details>
+<summary><b>🔹 Comment fonctionnent les variables statiques</b></summary>
+
+La fonction utilise un **buffer statique** pour conserver les données entre les appels :
 
 ```c
 char *get_next_line(int fd)
@@ -56,16 +120,16 @@ char *get_next_line(int fd)
 }
 ```
 
-Sans variables statiques, le buffer serait détruit après chaque appel de fonction, perdant toute donnée partielle lue. Les variables statiques nous permettent de :
-- Se souvenir des données restantes des lectures précédentes
-- Éviter de relire les mêmes données
-- Gérer des lignes plus grandes que `BUFFER_SIZE`
+Sans variables statiques, le buffer serait détruit après chaque appel, perdant toutes les données partiellement lues.
 
-### Flux de données
+</details>
+
+<details>
+<summary><b>🔹 Diagramme du flux de données</b></summary>
 
 ```
 ┌─────────────┐
-│   Fichier   │  "Hello World!\nCeci est ligne 2\n..."
+│   Fichier   │  "Hello World!\nCeci est la ligne 2\n..."
 └──────┬──────┘
        │ read(fd, temp, BUFFER_SIZE)
        ↓
@@ -75,7 +139,7 @@ Sans variables statiques, le buffer serait détruit après chaque appel de fonct
        │ find_newline() → position 12
        ↓
 ┌─────────────┐
-│extract_line │  Retourne : "Hello World!\n"
+│ extract_line│  Retourne : "Hello World!\n"
 └─────────────┘
        │
 ┌─────────────┐
@@ -83,41 +147,27 @@ Sans variables statiques, le buffer serait détruit après chaque appel de fonct
 └─────────────┘
 ```
 
-### Fonctions clés
+</details>
 
-| Fonction | Rôle |
-|----------|------|
-| `get_next_line(int fd)` | Fonction principale : coordonne la lecture et retourne une ligne |
-| `read_file(fd, buffer)` | Lit depuis fd jusqu'à trouver un retour à la ligne ou EOF |
-| `find_newline(buffer)` | Cherche le caractère `\n`, retourne la position ou -1 |
-| `extract_line(buffer)` | Crée et retourne la ligne (incluant `\n`) |
-| `update_buffer(buffer)` | Supprime la ligne retournée, garde les données restantes |
+<details>
+<summary><b>🔹 Gestion de la Mémoire</b></summary>
 
-### Gestion de la mémoire
-
-L'implémentation gère soigneusement la mémoire :
 - Toute la mémoire allouée est libérée quand elle n'est plus nécessaire
 - Le buffer est libéré quand EOF est atteint ou qu'une erreur survient
-- Chaque ligne retournée doit être libérée par l'appelant
+- Chaque ligne retournée **doit être libérée par l'appelant**
 
-## Installation & Compilation
+</details>
 
-### Compilation de base
+---
+
+## 🛠️ Compilation et Utilisation
+
+### Compiler
 
 ```bash
-# Cloner le dépôt
-git clone https://github.com/votreusername/get_next_line.git
-cd get_next_line
-
-# Compiler avec BUFFER_SIZE par défaut (42)
+# Compiler avec BUFFER_SIZE par défaut
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c main.c -o gnl
-```
 
-### BUFFER_SIZE personnalisé
-
-La taille du buffer détermine combien d'octets sont lus par appel système `read()` :
-
-```bash
 # Petit buffer (teste les cas limites)
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c main.c -o gnl
 
@@ -125,19 +175,7 @@ cc -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c 
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=4096 get_next_line.c get_next_line_utils.c main.c -o gnl
 ```
 
-**Impact sur les performances :**
-- **Buffer plus petit** → Plus d'appels `read()` → Plus lent, mais teste les cas limites
-- **Buffer plus grand** → Moins d'appels `read()` → Plus rapide, mais utilise plus de mémoire
-
-### Version bonus (Multiple FD)
-
-```bash
-cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line_bonus.c get_next_line_utils_bonus.c main.c -o gnl_bonus
-```
-
-## Utilisation
-
-### Exemple de base
+### Utiliser dans votre code
 
 ```c
 #include "get_next_line.h"
@@ -156,7 +194,7 @@ int main(void)
     while ((line = get_next_line(fd)) != NULL)
     {
         printf("%s", line);
-        free(line);  // N'oubliez pas de libérer !
+        free(line);  // N'oubliez pas de free !
     }
 
     close(fd);
@@ -164,7 +202,7 @@ int main(void)
 }
 ```
 
-### Lecture depuis stdin
+### Lire depuis stdin
 
 ```c
 #include "get_next_line.h"
@@ -183,58 +221,14 @@ int main(void)
 }
 ```
 
-### Exemple avec fichier.txt
+---
 
-**Fichier d'entrée (fichier.txt) :**
-```
-Bonjour le monde !
-Ceci est la ligne 2
-Et la ligne 3
-```
+## 🌟 Partie Bonus
 
-**Sortie :**
-```
-Bonjour le monde !
-Ceci est la ligne 2
-Et la ligne 3
-```
+<details>
+<summary><b>🔹 Descripteurs de fichiers multiples</b></summary>
 
-**Notes importantes :**
-- Chaque ligne inclut le `\n` de fin (sauf la dernière ligne si elle ne se termine pas par `\n`)
-- Toujours faire `free()` sur la ligne retournée pour éviter les fuites mémoire
-- Retourne `NULL` quand EOF est atteint ou qu'une erreur survient
-
-## Structure du projet
-
-```
-get_next_line/
-├── get_next_line.h              # Fichier d'en-tête (prototypes, defines)
-├── get_next_line.c              # Implémentation de la fonction principale
-├── get_next_line_utils.c        # Fonctions auxiliaires (strlen, strjoin, etc.)
-│
-├── get_next_line_bonus.h        # En-tête bonus (support multi-fd)
-├── get_next_line_bonus.c        # Implémentation bonus
-└── get_next_line_utils_bonus.c  # Utilitaires bonus
-```
-
-### Description des fichiers
-
-**Fichiers obligatoires :**
-- `get_next_line.h` - Contient les prototypes et la définition de BUFFER_SIZE
-- `get_next_line.c` - Logique principale avec variable statique pour un seul fd
-- `get_next_line_utils.c` - Fonctions utilitaires (`ft_strlen`, `ft_strjoin`, `ft_strdup`)
-
-**Fichiers bonus :**
-- Utilise un tableau de buffers statiques pour gérer plusieurs descripteurs de fichiers simultanément
-- Supporte jusqu'à `MAX_FD` (1024) descripteurs de fichiers concurrents
-
-## Fonctionnalités bonus
-
-### Plusieurs descripteurs de fichiers
-
-L'implémentation bonus peut gérer plusieurs descripteurs de fichiers en même temps sans perdre l'état de lecture de chacun.
-
-**Comment ça fonctionne :**
+L'implémentation bonus gère plusieurs descripteurs de fichiers simultanément sans perdre l'état de lecture de chacun :
 
 ```c
 static char *buffer[MAX_FD];  // Tableau de buffers, un par fd
@@ -245,85 +239,69 @@ static char *buffer[MAX_FD];  // Tableau de buffers, un par fd
 ```c
 int fd1 = open("fichier1.txt", O_RDONLY);
 int fd2 = open("fichier2.txt", O_RDONLY);
-int fd3 = open("fichier3.txt", O_RDONLY);
 
-char *line1 = get_next_line(fd1);  // Lit depuis fichier1
-char *line2 = get_next_line(fd2);  // Lit depuis fichier2
-char *line3 = get_next_line(fd1);  // Lit depuis fichier1 encore (ligne suivante)
-char *line4 = get_next_line(fd3);  // Lit depuis fichier3
+char *line1 = get_next_line(fd1);  // Lire depuis fichier1
+char *line2 = get_next_line(fd2);  // Lire depuis fichier2
+char *line3 = get_next_line(fd1);  // Relire depuis fichier1 (ligne suivante)
 
-// Chaque fd maintient son propre état
+// Chaque fd conserve son propre état
 free(line1);
 free(line2);
 free(line3);
-free(line4);
 ```
 
-C'est utile pour :
-- Lire plusieurs fichiers simultanément
-- Comparer des fichiers ligne par ligne
-- Opérations d'E/S multiplexées
-
-## Tests
-
-### Tester avec différentes valeurs de BUFFER_SIZE
+Compiler la version bonus :
 
 ```bash
-# Cas limite : 1 octet à la fois
-cc -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c main.c -o gnl && ./gnl
-
-# Taille standard
-cc -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c main.c -o gnl && ./gnl
-
-# Grand buffer
-cc -D BUFFER_SIZE=9999 get_next_line.c get_next_line_utils.c main.c -o gnl && ./gnl
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line_bonus.c get_next_line_utils_bonus.c main.c -o gnl_bonus
 ```
 
-### Cas limites à tester
-
-- Fichiers vides
-- Fichiers sans retour à la ligne final
-- Fichiers avec une seule ligne
-- Lignes très longues (plus longues que BUFFER_SIZE)
-- Fichiers binaires (comportement indéfini, mais ne devrait pas crasher)
-- Descripteurs de fichiers invalides
-- Lecture depuis stdin
-
-### Testeurs recommandés
-
-- [Tripouille/gnlTester](https://github.com/Tripouille/gnlTester)
-- [xicodomingues/francinette](https://github.com/xicodomingues/francinette)
-- Créez vos propres tests pour mieux comprendre la fonction !
-
-## Ressources
-
-### Documentation & Tutoriels
-
-- [man read(2)](https://man7.org/linux/man-pages/man2/read.2.html) - Documentation de l'appel système read
-- [man open(2)](https://man7.org/linux/man-pages/man2/open.2.html) - Gestion des descripteurs de fichiers
-- [Variables statiques en C](https://www.geeksforgeeks.org/static-variables-in-c/) - Comprendre le stockage statique
-- [E/S fichiers en C](https://www.gnu.org/software/libc/manual/html_node/I_002fO-Overview.html) - Documentation de la bibliothèque C GNU
-
-### Concepts clés appris
-
-- **Variables statiques** et leur cycle de vie
-- Gestion des **descripteurs de fichiers** dans Unix/Linux
-- **Gestion de la mémoire** et prévention des fuites
-- Stratégies de **gestion de buffer**
-- **Appels système** : `read()`, `open()`, `close()`
-
-### Déclaration d'utilisation de l'IA
-
-Ce projet a été complété sans assistance IA, suivant la philosophie de l'école 42 d'apprentissage par la collaboration entre pairs et la recherche personnelle. L'implémentation a été développée à travers :
-- Lecture de la documentation officielle (pages man)
-- Apprentissage pair-à-pair et revues de code
-- Essais et erreurs avec différents cas de test
-- Compréhension des concepts sous-jacents par la pratique
+</details>
 
 ---
 
-**Fait pour l'école 42**
+## ⚡ Impact du BUFFER_SIZE
 
-Cette implémentation réussit tous les tests obligatoires et bonus, gère les cas limites et est entièrement conforme à la Norme 42.
+<div align="center">
 
-Si vous trouvez cela utile, n'hésitez pas à mettre une étoile au dépôt ! Bonne chance pour votre propre implémentation.
+| BUFFER_SIZE | Appels read() | Vitesse | Mémoire |
+|:-----------:|:-------------:|:-------:|:-------:|
+| **1** | Beaucoup | Lent | Faible |
+| **42** | Modéré | Normal | Normal |
+| **4096** | Peu | Rapide | Plus élevée |
+
+</div>
+
+---
+
+## 📊 Statistiques
+
+<div align="center">
+
+| Métrique | Valeur |
+|:--------:|:------:|
+| **Fichiers** | 6 .c + 2 .h |
+| **Concept clé** | Variables statiques |
+| **Bonus** | Oui (multi-fd) |
+
+</div>
+
+---
+
+## 🚨 Avertissement
+
+**🇫🇷 Ce projet a un but éducatif et vous ne devez en aucun cas faire du copier-coller.**
+**Tricher c'est mal. Ne trichez pas.**
+
+**🇬🇧 This project has an educational purpose and you should under no circumstances copy and paste.**
+**Cheat is bad. Don't cheat.**
+
+---
+
+<div align="center">
+
+**Made with ❤️ for 42 Bangkok**
+
+[![Back to top](https://img.shields.io/badge/⬆-Retour_en_haut-blue?style=for-the-badge)](#get_next_line---lire-ligne-par-ligne)
+
+</div>
